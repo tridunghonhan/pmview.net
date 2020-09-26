@@ -4,7 +4,19 @@
   "description": "Measure and Visualize PM1/PM2.5/PM10",
   "main": "app.js",
   "scripts": {
-    "test": "echo hello"
+    "start": "source ./env.conf; node ./src/server.js",
+    "test": "source ./env.conf ; mocha --recursive"
+  },
+  "devDependencies": {
+    "mocha": "^8.0.1"
+  },
+  "dependencies": {
+    "axios": "^0.19.2",
+    "chai": "^4.2.0",
+    "chai-as-promised": "^7.1.1",
+    "express": "^4.17.1",
+    "form-data": "^3.0.0",
+    "https": "^1.0.0"
   },
   "author": "Kenny Ho",
   "license": "ISC"

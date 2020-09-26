@@ -1,0 +1,133 @@
+I. Architecture
+Note:
+Thus we find the system divided into decoupled horizontal layers—the UI,
+application-specific business rules, application-independent business rules,
+and the database, just to mention a few.
+
+	I.1 Application-independent business rules,	What will users to pay for ?
+		Information of the air pollution status at specific place&time for their business 
+
+	I.2 Application-specific business rules
+		- User can see the real time status of PM2.5
+		- User can set rules to trigger action
+		- User can combine multiple conditions with or/and operators to trigger action
+		- User can trigger multiple actions for one rule
+		- User can schedule for an action
+		- Actions include HTTP, MQTT, Mail, Notification.
+
+	I.3 Entities
+		- PM entity:
+			size(PM1.0/PM2.5/PM10), date, position, value
+		- Rule entity:
+			if <conditions> then <action>
+			Where:
+				+ condition: [<compare_value> <compare_operator> <compared_value>]
+				+ action: [sendMail, pushNotification, callAPI, callMQTT]
+
+
+II. Purpose
+	- Show full-stack IoT skillset of Subthings.com team 
+	- Build the reputation by giving an open-source e2e system
+	- Practice Clean Code
+
+III. Target Audients
+	- Developers: reusable system that is easy to setup and modify
+	- IoT product companies: Aware of Subthings.com as an IoT solution partner
+
+
+
+IV. Specification
+
+See the Visual Paradigm chart. 
+	- Send Information from Sensor to RPi via UART:
+	- Edge compute: validate the result from sensor, backup that result locally.
+	- Submit package: POST /sensors
+		HEADER: Authorization: Bearer <JWT>
+		BODY: 
+		{
+			gateway_id:"6E7F15B9-774F-44B1-95FE-80097B516028",
+			sensors:[
+				{
+					sensor_id: "String"
+					value: <0..1000>
+				}
+			]
+			date:1599294131 //Unix timestamp
+		}
+
+		Response: 200(OK), 400(invalid), 500(internal server error)
+	- GET /sensors request
+		HEADER: Authorization: Bearer <JWT>
+		Queries:
+		======
+		+ Name: datatype
+		+ Description: specify the type of data want to get. For example PM1.0, PM2.5, PM10.0, PM*. 
+		+ Schema: String 
+		+ Default: ""
+		+ Mandatory: Required
+		======
+		+ Name: location
+		+ Description: specify the location where data come.
+		+ Schema: lat,long (10.31256,100.614667)
+		+ Mandatory: Optional
+		======
+		+ Name: sensor_id
+		+ Description: specify the sensor that send data to gateway.
+		+ Schema: String
+		+ Mandatory: Optional
+		======
+		+ Name: gateway_id
+		+ Description: specify the gateway that send data to server.
+		+ Schema: String
+		+ Mandatory: Optional
+		======
+		+ Name: created_before
+		+ Description: select the data created before a date
+		+ Schema: Integer (Unixtimestamp)
+		+ Mandatory: Optional
+		======
+		+ Name: created_after
+		+ Description: select the data created after a date
+		+ Schema: Integer (Unixtimestamp)
+		+ Mandatory: Optional
+		======
+		+ Name: search
+		+ Description: data type filter by search string
+		+ Schema: string
+		+ Mandatory: Optional
+		======
+		+ Name: per_page
+		+ Description: Number of results per page	
+		+ Schema: integer
+		+ Mandatory: Optional
+		+ Default: 10
+		======
+		+ Name: page
+		+ Description: Results page number	
+		+ Schema: integer
+		+ Mandatory: Optional
+		+ Default: 1
+	- GET /sensors response:
+		HEADER: status 200(OK), 400(Invalid Requests), 500(Internal Error)
+		Body: <data> array in JSON format
+		Example: 
+			Response 200:
+			[ {
+				"sensorID": <String>,
+				"created" : timestamp,
+				"location" : "lat,long",
+				"datatype" : "PM2.5",
+				"value" : <0..1000>
+			} ]
+
+			Response 400:
+			{
+			  "error" : "fail to get data with type PMxxx ",
+			  "request_id" : "f7881e82-0492-49fb-b459-795654e7188a"
+			}
+
+			Response 500:
+			{
+			  "error" : "Internal server error. Contact Subthings.com supporter",
+			  "request_id" : "f7881e82-0492-49fb-b459-795654e7188a"
+			}

@@ -1,0 +1,11 @@
+{
+  "name": "pmview.net",
+  "version": "1.0.0",
+  "description": "Measure and Visualize PM1/PM2.5/PM10",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo hello"
+  },
+  "author": "Kenny Ho",
+  "license": "ISC"
+}

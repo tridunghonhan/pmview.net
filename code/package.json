@@ -18,7 +18,8 @@
     "chai-as-promised": "^7.1.1",
     "express": "^4.17.1",
     "form-data": "^3.0.0",
-    "https": "^1.0.0"
+    "https": "^1.0.0",
+    "jsonschema": "^1.2.7"
   },
   "author": "Kenny Ho",
   "license": "ISC"

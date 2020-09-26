@@ -1,3 +1,4 @@
 **/~*
 **/node_modules
 **/*gitignore.swp
+**/.nyc_output

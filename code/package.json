@@ -5,10 +5,12 @@
   "main": "app.js",
   "scripts": {
     "start": "source ./env.conf; node ./src/server.js",
-    "test": "source ./env.conf ; mocha --recursive"
+    "test": "source ./env.conf ; mocha --recursive",
+    "cov": "source ./env.conf ; nyc mocha --recursive"
   },
   "devDependencies": {
-    "mocha": "^8.0.1"
+    "mocha": "^8.0.1",
+    "nyc": "^15.1.0"
   },
   "dependencies": {
     "axios": "^0.19.2",

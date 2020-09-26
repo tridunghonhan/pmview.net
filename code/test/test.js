@@ -12,7 +12,7 @@ describe("Server up", function(){
   it('The server is reachable', function() {
     return TU.axiosInstance.head('/')
     .then(res=>{
-			return TU.expect(res.status).to.equal(200);
+      return TU.expect(res.status).to.equal(200);
     })
   });
 });

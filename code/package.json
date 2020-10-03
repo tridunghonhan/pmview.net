@@ -6,7 +6,8 @@
   "scripts": {
     "start": "source ./env.conf; node ./src/server.js",
     "test": "source ./env.conf ; mocha --recursive",
-    "cov": "source ./env.conf ; nyc mocha --recursive"
+    "cov": "source ./env.conf ; nyc mocha --recursive",
+    "play": "source ./env.conf; node ./playground/jsonschema-play.js"
   },
   "devDependencies": {
     "mocha": "^8.0.1",

@@ -13,12 +13,11 @@ let baseURL= Utls.baseURL();
 const axios = require('axios');
 const axiosInstance = axios.create({baseURL})
 var Validator = require('jsonschema').Validator;
-var v = new Validator();
 
 module.exports={
   expect,
   should,
   assert,
   axiosInstance,
-  jsonSchemaValidator: v
+  jsonSchemaValidator: new Validator()
 }
